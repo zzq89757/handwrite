@@ -1,21 +1,32 @@
-class Solution():
+class Solution:
     def maxSatisfied(self, customers: list[int], grumpy: list[int], minutes: int) -> int:
-        n = len(customers) - minutes
-        if n <= 0:return sum(customers)
-        # 计算不抑制时的客流量（原始客流量）
-        raw_total_customer = sum([customers[i] for i, x in enumerate(grumpy) if x - 1])
-        # 计算每个窗口抑制与不抑制的差值 找到差值最大的窗口 最大差值与原始客流量之和即为所求
-        max_diff = 0 
-        for i in range(n + 1):
-            customers_kmer = customers[i:i + minutes]
-            grumpy_kmer = grumpy[i:i + minutes]
-            diff = sum(customers_kmer) - sum([customers_kmer[i] for i, x in enumerate(grumpy_kmer) if x - 1])
-            if diff > max_diff: max_diff  = diff
-        return raw_total_customer + max_diff
+        N = len(customers)
+        sum_ = 0
+        # 所有不生气时间内的顾客总数
+        for i in range(N):
+            sum_ += customers[i] * (1 - grumpy[i])
+        # 生气的 X 分钟内，会让多少顾客不满意
+        curValue = 0
+        # 先计算起始的 [0, X) 区间
+        for i in range(minutes):
+            curValue += customers[i] * grumpy[i]
+        resValue = curValue
+        # 然后利用滑动窗口，每次向右移动一步
+        for i in range(minutes, N):
+            # 如果新进入窗口的元素是生气的，累加不满意的顾客到滑动窗口中
+            # 如果离开窗口的元素是生气的，则从滑动窗口中减去该不满意的顾客数
+            curValue = curValue + customers[i] * grumpy[i] - customers[i - minutes] * grumpy[i - minutes]
+            # 求所有窗口内不满意顾客的最大值
+            resValue = max(resValue, curValue)
+        # 最终结果是：不生气时的顾客总数 + 窗口X内挽留的因为生气被赶走的顾客数
+        return sum_ + resValue
+
+
 
 
 if __name__ == "__main__":
-    # 8278ms 击败 5.01%  18.57MB 击败 7.58%
+    # 64ms|击败43.41%  18.17MB|击败57.73%
+    
     s = Solution().maxSatisfied(customers = [1,0,1,2,1,1,7,5], grumpy = [0,1,0,1,0,1,0,1], minutes = 3)
     print(s)
     s = Solution().maxSatisfied(customers = [1], grumpy = [0], minutes = 1)

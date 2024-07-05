@@ -15,7 +15,7 @@ class Solution():
 
 
 if __name__ == "__main__":
-    # 8278ms 击败 5.01%  18.57MB 击败 7.58%
+    # 8278ms|击败5.01%  18.57MB|击败7.58%
     s = Solution().maxSatisfied(customers = [1,0,1,2,1,1,7,5], grumpy = [0,1,0,1,0,1,0,1], minutes = 3)
     print(s)
     s = Solution().maxSatisfied(customers = [1], grumpy = [0], minutes = 1)
