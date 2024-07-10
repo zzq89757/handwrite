@@ -36,7 +36,11 @@ class Astar:
                 current_pos = down_pos
             graph[current_pos] = 0
             move_step += 1
-            print(current_pos)
+            print(current_pos,end="\t")
+            print(up_dis,end="-")
+            print(down_dis,end="-")
+            print(left_dis,end="-")
+            print(right_dis)
         print(graph)
                 
 
