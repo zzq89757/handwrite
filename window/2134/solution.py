@@ -4,13 +4,17 @@ class Solution:
         n = len(num)
         k = sum(num)
         # 逆向思维：统计1的个数k，n-k 为window size，找和最小的窗口
+        # 需考虑0比1多时 能够交换的1 不够的问题！！
         # 第一个窗口
         _min = _current = sum(num[:n - k])
         # 后续窗口 仅考虑滑出和滑入的值
         for i in range(n - k, n):
             _current += num[i] - num[i - (n - k)]
             if _current < _min:
-                _min = _current      
+                _min = _current
+        
+        for i in range(-(n-k-1), 0, 1):
+            print(i)  
         return _min
 
 
