@@ -1,5 +1,5 @@
 class Solution:
-    def eg(self, )->int:
+    def minSwaps(self, num: list[int]) -> int:
         
         
         return None
@@ -10,5 +10,5 @@ class Solution:
 
 if __name__ == "__main__":
     s = Solution()
-    res = s.eg()
+    res = s.minSwaps()
     print(res)
