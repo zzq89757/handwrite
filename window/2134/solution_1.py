@@ -5,10 +5,9 @@ class Solution:
         # 第一个窗口中1的数目
         _max = _ones = sum(num[:k])
         
-        # 后续窗口       
+        # 后续窗口 考虑到数组是环形 窗口滑出为 i 滑入为  (i + k) % n 
         for i in range(0, n - 1):
             _ones += num[(i + k) % n] - num[i]
-            print(_ones)
             if _ones > _max:
                 _max = _ones       
         return k - _max
