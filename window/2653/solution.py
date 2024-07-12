@@ -6,12 +6,11 @@ class Solution:
         n = len(num)
         # 滑动取值
         # 第一个窗口
-        # ct = Counter(num[:k])
+        ct = Counter(num[:k])
         # 判断倒数第x个元素 即正数第 k-x+1 个
         
         # 后续窗口
-        for i in range(n -k):
-            if i == 0:ct = Counter(num[:k])
+        for i in range(k,n):
             current_sum = 0
             is_add = 0
             for val, count in ct.items():
@@ -21,10 +20,10 @@ class Solution:
                     is_add = 1
                     break
             if not is_add:beauty_list.append(0)
-            ct[num[i-1]] += 1
-            ct[num[i + k]] -= 1
-            if ct[num[i-1]] == 0:ct.pop(num[i-1])
             print(ct)
+            ct[num[i]] += 1
+            ct[num[i-k]] -= 1
+            if ct[num[i-k]] == 0:ct.pop(num[i-k])
         
         print(beauty_list) 
         
